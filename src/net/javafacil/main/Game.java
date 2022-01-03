@@ -9,14 +9,20 @@ public class Game extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = 6709988147337355487L;
 	
-	public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+	public static final int WIDTH = 800, HEIGHT = 800;
 	
 	private Thread thread;
 	private boolean running = false;
 	
+	private Handler handler;
+	
 
 	public Game() {
 		new Window(WIDTH, HEIGHT, "Game Template", this);
+		
+		handler = new Handler();
+		
+		handler.addObject(new Player(100, 100, ID.Player));
 	}
 
 	public synchronized void start() {
@@ -64,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
-		
+		handler.tick();
 	}
 	
 	private void render() {
@@ -78,6 +84,8 @@ public class Game extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		handler.render(g);
 		
 		g.dispose();
 		bs.show();
